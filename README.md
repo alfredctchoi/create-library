@@ -21,7 +21,7 @@ An opinionated [npm package initializer][npm-init]. Scaffolds an npm library tre
 This NPM library initializer is a CLI tool that makes the process of creating and publishing a new NPM package significantly easier and faster. Here's what you get out of the box:
 - Scaffolded NPM library, with automatically generated `package.json` and Github settings based on user input
 - Github repository settings as code living in the repository of your library (see [probot/settings][probot-settings] for more details)
-- CircleCI [configuration file](./template/circle.yml) for a standard pipeline, including the following jobs: `build`, `lint`, `test`, and `release`
+- CircleCI [configuration file](template/.circleci/config.yml) for a standard pipeline, including the following jobs: `build`, `lint`, `test`, and `release`
 - Automated version management and NPM package publishing using [semantic-release][semantic-release], that uses formalized commit message convention to document changes in the codebase
 - Basic setup for unit tests with [tap][tap]
 - Security auditing using [npm audit][npm-audit]
@@ -55,7 +55,7 @@ When you run `npm init @telus/library`, you will be prompted with a few question
 
 Once you have scaffolded you library files and pushed them to a repository, you can set up your new repository with CircleCI so that it runs the configured pipeline for every push.
 
-To do that, go to [Circle CI][circle-ci-telus] and login with your Github account. Once logged in, you should be able to access the `Add projects` page, where you can search for your repository and click on `Set Up project`. In the next step, CircleCI will try to determine what OS and language your app needs (Linux/Node should be correct for most of our apps) and suggest you how to write your configuration file. Remember we already have [that](./template/circle.yml) among our scaffolded files, so just click on `Start building`. 
+To do that, go to [Circle CI][circle-ci-telus] and login with your Github account. Once logged in, you should be able to access the `Add projects` page, where you can search for your repository and click on `Set Up project`. In the next step, CircleCI will try to determine what OS and language your app needs (Linux/Node should be correct for most of our apps) and suggest you how to write your configuration file. Remember we already have [that](template/.circleci/config.yml) among our scaffolded files, so just click on `Start building`. 
 
 Once you have clicked on `Start building`, CircleCI will try to identify your config file and run the pipeline accordingly in your `master` branch. If no config file is found in the `master` branch, you'll see an error. However, once you make a new push to any branch and a valid config file is detected, you will see the pipeline run.
 
@@ -72,7 +72,7 @@ As a result, this is what happens after you run `npm init @telus/library`:
 
 ## <a id="step-4"></a> Local development gotchas
 
-You might notice in the template [CircleCI configuration file](./template/circle.yml) that we use a particular Docker image called `telus/build-essential` as a base image. That ensures we get access to some globally installed packages needed to run the various steps in the pipeline. 
+You might notice in the template [CircleCI configuration file](template/.circleci/config.yml) that we use a particular Docker image called `telus/build-essential` as a base image. That ensures we get access to some globally installed packages needed to run the various steps in the pipeline. 
 
 In order to make these scripts work in local development, you will need to ensure you have those packages installed on your machine. Running `npx install-group peer --package @telus/build-essential --no-save` inside your project folder will make those dependencies available. For convenience, we have added a script for this inside the template `package.json`: `npm run setup-local`.
 
